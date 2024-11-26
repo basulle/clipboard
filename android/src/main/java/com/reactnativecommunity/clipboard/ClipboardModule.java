@@ -11,7 +11,8 @@ import android.content.ClipboardManager;
 import android.content.ClipData;
 import android.content.Context;
 
-import com.facebook.react.bridge.ContextBaseJavaModule;
+import com.facebook.react.bridge.ReactApplicationContext;
+import com.facebook.react.bridge.ReactContextBaseJavaModule;
 import com.facebook.react.bridge.ReactMethod;
 import com.facebook.react.bridge.Promise;
 import com.facebook.react.module.annotations.ReactModule;
@@ -20,10 +21,10 @@ import com.facebook.react.module.annotations.ReactModule;
  * A module that allows JS to get/set clipboard contents.
  */
 @ReactModule(name = ClipboardModule.NAME)
-public class ClipboardModule extends ContextBaseJavaModule {
+public class ClipboardModule extends ReactContextBaseJavaModule {
 
   public ClipboardModule(Context context) {
-    super(context);
+    super(new ReactApplicationContext(context));
   }
 
   public static final String NAME = "RNCClipboard";
@@ -34,7 +35,7 @@ public class ClipboardModule extends ContextBaseJavaModule {
   }
 
   private ClipboardManager getClipboardService() {
-    return (ClipboardManager) getContext().getSystemService(getContext().CLIPBOARD_SERVICE);
+    return (ClipboardManager) getReactApplicationContext().getSystemService(getReactApplicationContext().CLIPBOARD_SERVICE);
   }
 
   @ReactMethod
